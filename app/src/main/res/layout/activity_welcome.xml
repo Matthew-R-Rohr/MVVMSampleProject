@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    android:textAlignment="center">
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/title_welcome"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_sub_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginEnd="32dp"
+        android:text="@string/welcome_txt_subtitle"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+    <Button
+        android:id="@+id/btn_rx_java"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/general_rxjava"
+        app:layout_constraintStart_toStartOf="@+id/btn_flow"
+        app:layout_constraintTop_toBottomOf="@+id/txt_flow_info" />
+
+    <Button
+        android:id="@+id/btn_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/general_flow"
+        app:layout_constraintEnd_toStartOf="@+id/btn_live_data"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sub_title" />
+
+    <Button
+        android:id="@+id/btn_callbacks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/general_callbacks"
+        app:layout_constraintStart_toStartOf="@+id/btn_live_data"
+        app:layout_constraintTop_toTopOf="@+id/btn_rx_java" />
+
+    <Button
+        android:id="@+id/btn_live_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/general_livedata"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_flow"
+        app:layout_constraintTop_toTopOf="@+id/btn_flow" />
+
+    <TextView
+        android:id="@+id/txt_livedata_info"
+        android:layout_width="@dimen/welcome_info_width"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_livedata_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="@dimen/welcome_info_size"
+        app:layout_constraintStart_toStartOf="@+id/btn_live_data"
+        app:layout_constraintTop_toBottomOf="@+id/btn_live_data" />
+
+    <TextView
+        android:id="@+id/txt_rxjava_info"
+        android:layout_width="@dimen/welcome_info_width"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_rxjava_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="@dimen/welcome_info_size"
+        app:layout_constraintStart_toStartOf="@+id/btn_rx_java"
+        app:layout_constraintTop_toBottomOf="@+id/btn_rx_java" />
+
+    <TextView
+        android:id="@+id/txt_callback_info"
+        android:layout_width="@dimen/welcome_info_width"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_callbacks_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="@dimen/welcome_info_size"
+        app:layout_constraintStart_toStartOf="@+id/btn_callbacks"
+        app:layout_constraintTop_toBottomOf="@+id/btn_callbacks" />
+
+    <TextView
+        android:id="@+id/txt_flow_info"
+        android:layout_width="@dimen/welcome_info_width"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_flow_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="@dimen/welcome_info_size"
+        app:layout_constraintStart_toStartOf="@+id/btn_flow"
+        app:layout_constraintTop_toBottomOf="@+id/btn_flow" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

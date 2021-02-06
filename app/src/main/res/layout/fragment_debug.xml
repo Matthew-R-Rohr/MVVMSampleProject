@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/spacing_medium">
+
+    <Button
+        android:id="@+id/btn_test_live_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="@string/general_livedata"
+        app:layout_constraintStart_toStartOf="@+id/btn_test_rxjava"
+        app:layout_constraintTop_toBottomOf="@+id/btn_test_rxjava" />
+
+    <TextView
+        android:id="@+id/txt_debug_output"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:background="@drawable/rounded_corner"
+        android:gravity="bottom"
+        android:padding="@dimen/spacing_normal"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_test_live_data"
+        tools:text="Unbinding All\nDeleting Caches\nInit RxJava DataTier" />
+
+    <Button
+        android:id="@+id/btn_delete_caches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/debug_delete_caches"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_restart_app"
+        app:layout_constraintTop_toTopOf="@+id/btn_restart_app" />
+
+    <Button
+        android:id="@+id/btn_restart_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="@string/debug_restart_app"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete_caches"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_test_rxjava"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="@string/general_rxjava"
+        app:layout_constraintStart_toStartOf="@+id/btn_restart_app"
+        app:layout_constraintTop_toBottomOf="@+id/txt_data_test" />
+
+    <Button
+        android:id="@+id/btn_test_callbacks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/general_callbacks"
+        app:layout_constraintEnd_toEndOf="@+id/btn_test_flow"
+        app:layout_constraintTop_toTopOf="@+id/btn_test_live_data" />
+
+    <Button
+        android:id="@+id/btn_test_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/general_flow"
+        app:layout_constraintEnd_toEndOf="@+id/btn_delete_caches"
+        app:layout_constraintTop_toTopOf="@+id/btn_test_rxjava" />
+
+    <TextView
+        android:id="@+id/txt_data_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xlarge"
+        android:text="@string/debug_data_tier_testing"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_restart_app" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

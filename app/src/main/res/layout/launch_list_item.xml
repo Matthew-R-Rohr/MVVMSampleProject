@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingBottom="@dimen/spacing_medium">
+
+    <TextView
+        android:id="@+id/txt_photo_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/img_photo"
+        app:layout_constraintStart_toEndOf="@+id/img_photo"
+        app:layout_constraintTop_toTopOf="@+id/img_photo"
+        tools:text="6" />
+
+    <ImageView
+        android:id="@+id/img_photo"
+        android:layout_width="@dimen/img_small"
+        android:layout_height="@dimen/img_small"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_name"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name"
+        app:srcCompat="@drawable/ic_baseline_photo_24" />
+
+    <ImageView
+        android:id="@+id/img_patch"
+        android:layout_width="@dimen/patch_size_large"
+        android:layout_height="@dimen/patch_size_large"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/img_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/img_patch"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mission Plausible not impossible extra long name" />
+
+    <TextView
+        android:id="@+id/txt_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/txt_date"
+        app:layout_constraintStart_toEndOf="@+id/txt_photo_count"
+        app:layout_constraintTop_toTopOf="@+id/txt_photo_count"
+        tools:text="Success" />
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_success"
+        tools:text="Jan 01, 2020" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

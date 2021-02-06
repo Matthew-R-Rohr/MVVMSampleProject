@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_launches"
+        android:icon="@drawable/ic_baseline_arrow_upward_24"
+        android:title="@string/title_launches" />
+
+    <item
+        android:id="@+id/navigation_debug"
+        android:icon="@drawable/ic_baseline_debug_24"
+        android:title="@string/title_debug" />
+
+</menu>

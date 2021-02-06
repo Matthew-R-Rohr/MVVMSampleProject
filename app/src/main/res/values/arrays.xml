@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="launch_array">
+        <item>@string/launch_type_past</item>
+        <item>@string/launch_type_latest</item>
+        <item>@string/launch_type_upcoming</item>
+    </array>
+</resources>

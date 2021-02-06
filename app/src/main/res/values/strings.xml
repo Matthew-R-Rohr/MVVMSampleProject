@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">MVVM Sample Project</string>
+
+    <string name="title_launches">Launches</string>
+    <string name="title_details">%1$s Launch Details</string>
+    <string name="title_debug">Debug</string>
+    <string name="title_welcome">MVVM Sample Project</string>
+    <string name="title_launch">Using: %1$s</string>
+
+    <string name="general_rxjava">RxJava</string>
+    <string name="general_flow">Flow</string>
+    <string name="general_callbacks">Callbacks</string>
+    <string name="general_livedata">LiveData</string>
+    <string name="general_not_found">Not Found</string>
+
+    <string name="welcome_txt_subtitle">All data tiers use the SpaceX Launch API\nSelect a data structure to begin</string>
+    <string name="welcome_flow_info">MVVM architecture using Flow/Coroutines with a ROOM Database as the cache</string>
+    <string name="welcome_callbacks_info">MVVM architecture using traditional Callbacks with an InMemory cache</string>
+    <string name="welcome_rxjava_info">MVVM architecture using RxJava with a ROOM Database as the cache</string>
+    <string name="welcome_livedata_info">MVVM architecture using LiveData with an InMemory cache</string>
+
+    <string name="debug_delete_caches">Delete Caches</string>
+    <string name="debug_data_tier_testing">Data Tier Testing</string>
+    <string name="debug_restart_app">Restart App</string>
+
+    <string name="launch_type_latest">Latest Launch</string>
+    <string name="launch_type_past">Past Launches</string>
+    <string name="launch_type_upcoming">Upcoming Launches</string>
+    <string name="launch_success">Successful</string>
+    <string name="launch_fail">Failed</string>
+    <string name="launch_upcoming">Upcoming</string>
+    <string name="launch_name">Launch %1$s</string>
+
+    <string name="reddit">Reddit</string>
+    <string name="wikipedia">Wikipedia</string>
+    <string name="webcast">Webcast</string>
+    <string name="article">Article</string>
+    <string name="details_external_links">External Links:</string>
+    <string name="details_flight_number">Flight %1$d</string>
+    <string name="details_available_photos">Viewing photo %1$d of %2$d, tap to view the next</string>
+    <string name="generic_load_error">There was an error loading this content.\n\n%1$s</string>
+
+</resources>

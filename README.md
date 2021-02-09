@@ -18,8 +18,7 @@ Android mobile app. I have been developing Android projects since 2012.
 (both personal and contracted)
 
 This GitHub project was created and made public for a couple reasons:
-* **Personal Android Resume** - `Show & Tell` for tech interviews
-* **Other Android Developers** - Sometimes seeing code is easier than reading through a whole `how to` article
+* `Show & Tell` for tech/contracting interviews
 * **Quick Reference Guide** - As a contractor, moving between client Android tech stacks can be dizzying. In my experience, most
   clients are moving toward MVVM but still differ on how it is implemented.  Having a quick reference for interview prep and development is helpful.
 * **FLOW/Coroutine Implementation** - Been eager to play with this, to get an idea how it compares to RxJava.  Loving it so far.

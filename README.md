@@ -24,7 +24,7 @@ This GitHub project was created and made public for a couple reasons:
 * **FLOW/Coroutine Implementation** - Been eager to play with this, to get an idea how it compares to RxJava.  Loving it so far.
 
 #### Why Multiple Patterns??
-In my experience, the data layer (observer choices and cache management) is the most complex part of the app. I
+The data layer (observer choices and cache management) is the most complex part of the app. I
 have worked on numerous Android projects that moved toward MVVM but
 implemented the actual observer pattern and data storage strategy several different ways.  This
 in part is why I included these as example implementations:

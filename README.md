@@ -1,7 +1,7 @@
 Android SpaceX MVVM Architecture Project
 ========================================
 
-This is Android project is using a MVVM (Model-View-ViewModel)
+This Android project is using a MVVM (Model-View-ViewModel)
 architecture, implemented with several different example observer patterns and data storage strategies.
 
 This project is still under development, see the TODO

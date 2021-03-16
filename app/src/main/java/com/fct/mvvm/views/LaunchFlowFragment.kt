@@ -38,21 +38,21 @@ class LaunchFlowFragment : BaseLaunchFragment() {
             LaunchType.LATEST -> {
                 jobFlowLatest = scope.launch {
                     flowViewModel.fetchLatestLaunch().collect {
-                        updateUIAsList(it)
+                        updateUI(it)
                     }
                 }
             }
             LaunchType.PAST -> {
                 jobFlowPast = scope.launch {
                     flowViewModel.fetchPastLaunches().collect {
-                        updateUI(it)
+                        updateUIWithList(it)
                     }
                 }
             }
             LaunchType.UPCOMING -> {
                 jobFlowUpcoming = scope.launch {
                     flowViewModel.fetchUpcomingLaunches().collect {
-                        updateUI(it)
+                        updateUIWithList(it)
                     }
                 }
             }

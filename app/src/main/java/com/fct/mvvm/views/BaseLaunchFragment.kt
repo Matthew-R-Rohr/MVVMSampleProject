@@ -75,7 +75,7 @@ abstract class BaseLaunchFragment : Fragment(), AdapterView.OnItemSelectedListen
     /**
      * Updates UI based off of a list of data
      */
-    protected fun updateUI(result: UIState<List<LaunchEntity>>) {
+    protected fun updateUIWithList(result: UIState<List<LaunchEntity>>) {
         when (result.status) {
             UIState.Status.SUCCESS -> submitList(result.data)
             UIState.Status.ERROR -> showErrorUI(result.error)
@@ -86,7 +86,7 @@ abstract class BaseLaunchFragment : Fragment(), AdapterView.OnItemSelectedListen
     /**
      * Update UI based off of a single data
      */
-    protected fun updateUIAsList(result: UIState<LaunchEntity>) {
+    protected fun updateUI(result: UIState<LaunchEntity>) {
         when (result.status) {
             UIState.Status.SUCCESS -> submitList(result.data?.asList())
             UIState.Status.ERROR -> showErrorUI(result.error)

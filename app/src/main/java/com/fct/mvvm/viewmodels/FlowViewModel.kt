@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 class FlowViewModel(
     private val repository: FlowRepository
 ) : ViewModel() {
-    fun fetchLatestLaunch(): Flow<UIState<LaunchEntity>> = repository.getLatestLaunch()
+    fun fetchLatestLaunch() = repository.getLatestLaunch()
     fun fetchPastLaunches() = repository.getPastLaunches()
     fun fetchUpcomingLaunches() = repository.getUpcomingLaunches()
 }

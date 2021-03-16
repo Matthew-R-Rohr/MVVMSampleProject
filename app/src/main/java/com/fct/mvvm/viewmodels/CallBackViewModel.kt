@@ -9,7 +9,7 @@ import com.fct.mvvm.data.UIState
 import com.fct.mvvm.data.repository.CallbackRepository
 
 /**
- * Implementing observer pattern using Callbacks from the [CallbackRepository], transitioning into LiveData
+ * Using Callbacks from the [CallbackRepository] and then transitioning into LiveData
  *
  * The ViewModel class is designed to store and manage UI-related data in a lifecycle conscious way.
  * The ViewModel class allows data to survive configuration changes such as screen rotations.

@@ -23,15 +23,15 @@ class LaunchLiveDataFragment : BaseLaunchFragment() {
         when (launchType) {
             LaunchType.LATEST -> {
                 liveDataViewModel.fetchLatestLaunch()
-                    .observe(viewLifecycleOwner, { updateUIAsList(it) })
+                    .observe(viewLifecycleOwner, { updateUI(it) })
             }
             LaunchType.PAST -> {
                 liveDataViewModel.fetchPastLaunches()
-                    .observe(viewLifecycleOwner, { updateUI(it) })
+                    .observe(viewLifecycleOwner, { updateUIWithList(it) })
             }
             LaunchType.UPCOMING -> {
                 liveDataViewModel.fetchUpcomingLaunches()
-                    .observe(viewLifecycleOwner, { updateUI(it) })
+                    .observe(viewLifecycleOwner, { updateUIWithList(it) })
             }
         }
     }

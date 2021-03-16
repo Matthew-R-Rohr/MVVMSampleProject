@@ -38,6 +38,7 @@ class LiveDataRepository {
     fun getLatestLaunch() = liveData(Dispatchers.IO) {
         emit(loading()) // loading state
         runCatching {
+
             // check cache
             val cachedData = agedInMemCache.get(LATEST_LAUNCH_KEY) as? LaunchEntity
             cachedData?.let {
@@ -74,6 +75,7 @@ class LiveDataRepository {
     fun getUpcomingLaunches() = liveData(Dispatchers.IO) {
         emit(loading()) // loading state
         runCatching {
+
             // check in memory cache
             val cachedData = agedInMemCache.get(UPCOMING_LAUNCHES_KEY) as? List<LaunchEntity>
             cachedData?.let {
@@ -113,6 +115,7 @@ class LiveDataRepository {
     fun getPastLaunches() = liveData(Dispatchers.IO) {
         emit(loading()) // loading state
         runCatching {
+
             // check in memory cache
             val cachedData = agedInMemCache.get(PAST_LAUNCHES_KEY) as? List<LaunchEntity>
             cachedData?.let {

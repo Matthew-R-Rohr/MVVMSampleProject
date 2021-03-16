@@ -23,17 +23,17 @@ class LaunchCallbackFragment : BaseLaunchFragment() {
         when (launchType) {
             LaunchType.LATEST -> {
                 callBackViewModel.fetchLatestLaunch().observe(viewLifecycleOwner, {
-                    updateUIAsList(it)
+                    updateUI(it)
                 })
             }
             LaunchType.PAST -> {
                 callBackViewModel.fetchPastLaunches().observe(viewLifecycleOwner, {
-                    updateUI(it)
+                    updateUIWithList(it)
                 })
             }
             LaunchType.UPCOMING -> {
                 callBackViewModel.getUpcomingLaunches().observe(viewLifecycleOwner, {
-                    updateUI(it)
+                    updateUIWithList(it)
                 })
             }
         }

@@ -39,6 +39,6 @@ fun Date.toMonthDayYearString(): String =
     SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(this)
 
 /**
- * Return an empty string if original string is empty
+ * Return an empty string if original string is null
  */
 fun String?.returnEmptyStringIfNull() = if (this.isNullOrBlank()) "" else this

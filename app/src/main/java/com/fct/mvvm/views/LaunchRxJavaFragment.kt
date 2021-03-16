@@ -35,21 +35,21 @@ class LaunchRxJavaFragment : BaseLaunchFragment() {
                 rxJavaViewModel.fetchLatestLaunch()
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoadingUI() }
-                    .subscribe(::updateUIAsList)
+                    .subscribe(::updateUI)
                     .addToComposite(compositeDisposable)
             }
             LaunchType.PAST -> {
                 rxJavaViewModel.fetchPastLaunches()
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoadingUI() }
-                    .subscribe(::updateUI)
+                    .subscribe(::updateUIWithList)
                     .addToComposite(compositeDisposable)
             }
             LaunchType.UPCOMING -> {
                 rxJavaViewModel.fetchUpcomingLaunches()
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoadingUI() }
-                    .subscribe(::updateUI)
+                    .subscribe(::updateUIWithList)
                     .addToComposite(compositeDisposable)
             }
         }

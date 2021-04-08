@@ -8,7 +8,10 @@ import com.fct.mvvm.data.database.LaunchDao
 private const val TAG = "tcbcFlowRepo"
 
 /**
- * Example repository implementation using Flow/Coroutines + Retrofit + ROOM DB cache
+ * Example repository implementation using Coroutines + Retrofit + ROOM DB cache
+ *
+ * This implementation is very similar to the [LiveDataRepository], as they both return from [suspend] but differ in
+ * actual cached data management
  *
  * Methods return cached data using [LaunchDao], otherwise will get fresh data through the [SpaceXApi]
  */
@@ -25,9 +28,13 @@ class FlowRepository(
      * If cached data is not present, will contact the [SpaceXApi] to refresh the data within the SpaceXDatabase
      */
     suspend fun getLatestLaunch(): LaunchEntity? {
+
+        // check ROOM DB cache
         val cached = launchDao.getLatestLaunch()
         return if (cached != null) cached
         else {
+
+            // return and update cache if empty
             Log.d(TAG, "empty cache, getting data")
             val response = spaceXApi.spaceXService.getLatestLaunchByCoroutine()
             if (response.isSuccessful) {
@@ -52,14 +59,20 @@ class FlowRepository(
      * If cached data is not present, will contact the [SpaceXApi] to refresh the data within the SpaceXDatabase
      */
     suspend fun getUpcomingLaunches(): List<LaunchEntity> {
+
+        // check ROOM DB cache
         val cachedList = launchDao.getUpcomingLaunches()
         return if (cachedList.size > 1) cachedList
         else {
+
+            // return and update cache if empty
             Log.d(TAG, "empty cache, getting data")
             val response = spaceXApi.spaceXService.getUpcomingLaunchesByCoroutine()
             if (response.isSuccessful) {
-                response.body()?.let {
-                    val entityList = dtoTransformer.transformToLaunchEntityCollection(it)
+                response.body()?.let { results ->
+                    val entityList = dtoTransformer
+                        .transformToLaunchEntityCollection(results)
+                        .sortedBy { it.dateUnix }
 
                     // update cache
                     launchDao.insertAll(entityList)
@@ -80,14 +93,20 @@ class FlowRepository(
      * If cached data is not present, will contact the [SpaceXApi] to refresh the data within the SpaceXDatabase
      */
     suspend fun getPastLaunches(): List<LaunchEntity> {
+
+        // check ROOM DB cache
         val cachedList = launchDao.getPastLaunches()
         return if (cachedList.size > 1) cachedList
         else {
+
+            // return and update cache if empty
             Log.d(TAG, "empty cache, getting data")
             val response = spaceXApi.spaceXService.getPastLaunchesByCoroutine()
             if (response.isSuccessful) {
-                response.body()?.let {
-                    val entityList = dtoTransformer.transformToLaunchEntityCollection(it)
+                response.body()?.let { results ->
+                    val entityList = dtoTransformer
+                        .transformToLaunchEntityCollection(results)
+                        .sortedByDescending { it.dateUnix }
 
                     // update cache
                     launchDao.insertAll(entityList)

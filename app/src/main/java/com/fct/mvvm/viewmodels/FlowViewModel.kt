@@ -32,7 +32,7 @@ class FlowViewModel(
 ) : ViewModel() {
 
     /**
-     * Returns the Latest Launch data within a [UIState] as a [flow] observable
+     * Emits the Latest Launch data within a [UIState] as a [flow] observable
      */
     fun fetchLatestLaunch() = flow {
         emit(loading<LaunchEntity>()) // loading state
@@ -48,7 +48,7 @@ class FlowViewModel(
         }
 
     /**
-     * Returns Past Launch data within a [UIState] as a [flow] observable
+     * Emits Past Launch data within a [UIState] as a [flow] observable
      */
     fun fetchPastLaunches() = flow {
         emit(loading<List<LaunchEntity>>()) // loading state
@@ -64,7 +64,7 @@ class FlowViewModel(
         }
 
     /**
-     * Returns Upcoming Launch data within a [UIState] as a [flow] observable
+     * Emits Upcoming Launch data within a [UIState] as a [flow] observable
      */
     fun fetchUpcomingLaunches() = flow {
         emit(loading<List<LaunchEntity>>()) // loading state

@@ -1,15 +1,8 @@
 package com.fct.mvvm.data.repository
 
 import android.util.Log
-import androidx.lifecycle.liveData
 import com.fct.mvvm.api.SpaceXApi
 import com.fct.mvvm.data.LaunchEntity
-import com.fct.mvvm.data.UIState.Companion.error
-import com.fct.mvvm.data.UIState.Companion.loading
-import com.fct.mvvm.data.UIState.Companion.success
-import io.reactivex.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "tcbcLiveDataRepo"
@@ -20,7 +13,10 @@ private const val PAST_LAUNCHES_KEY = "pastLaunches"
 private const val UPCOMING_LAUNCHES_KEY = "upcomingLaunches"
 
 /**
- * Example repository implementation using LiveData/Coroutines + Retrofit + InMem cache
+ * Example repository implementation using Coroutines + Retrofit + InMem cache
+ *
+ * This implementation is very similar to the [LiveDataRepository], as they both return from [suspend] but differ in
+ * actual cached data management
  *
  * Methods return cached data using [AgedMemoryCache], otherwise will return fresh data through the [SpaceXApi]
  */
@@ -31,20 +27,16 @@ class LiveDataRepository {
     private val agedInMemCache = AgedMemoryCache(CACHE_EXPIRATION_MILLIS)
 
     /**
-     * fetches the latest SpaceX launch as LiveData using Coroutines
+     * fetches the latest SpaceX launch
      *
      * If cached data is not present, will contact the [SpaceXApi] to refresh the [AgedMemoryCache]
      */
-    fun getLatestLaunch() = liveData(Dispatchers.IO) {
-        emit(loading()) // loading state
-        runCatching {
+    suspend fun getLatestLaunch(): LaunchEntity? {
 
-            // check cache
-            val cachedData = agedInMemCache.get(LATEST_LAUNCH_KEY) as? LaunchEntity
-            cachedData?.let {
-                emit(success(cachedData))
-                return@liveData
-            }
+        // check in memory cache
+        val cachedData = agedInMemCache.get(LATEST_LAUNCH_KEY) as? LaunchEntity
+        return if (cachedData != null) cachedData
+        else {
             Log.d(TAG, "cache is stale, getting fresh data")
 
             // make the API call
@@ -54,34 +46,27 @@ class LiveDataRepository {
 
                     // convert from dto to entity
                     val launchEntity = dtoTransformer.transformToLaunchEntity(it)
-
                     agedInMemCache.set(LATEST_LAUNCH_KEY, launchEntity) // update cache
-                    emit(success(launchEntity)) // success state
+                    return launchEntity
                 }
             } else {
-                emit(error<LaunchEntity>(Exception("getLatestLaunch() was not successful: ${response.code()}"))) // error state
+                throw(Exception("getLatestLaunch() was not successful: ${response.code()}"))
             }
-        }.onFailure {
-            emit(error<LaunchEntity>(it as Exception)) // error state
         }
     }
 
     /**
-     * fetches all upcoming SpaceX launches as LiveData using Coroutines
+     * fetches all upcoming SpaceX launches
      *
      * If cached data is not present, will contact the [SpaceXApi] to refresh the [AgedMemoryCache]
      */
     @Suppress("UNCHECKED_CAST")
-    fun getUpcomingLaunches() = liveData(Dispatchers.IO) {
-        emit(loading()) // loading state
-        runCatching {
+    suspend fun getUpcomingLaunches(): List<LaunchEntity> {
 
-            // check in memory cache
-            val cachedData = agedInMemCache.get(UPCOMING_LAUNCHES_KEY) as? List<LaunchEntity>
-            cachedData?.let {
-                emit(success(cachedData))
-                return@liveData
-            }
+        // check in memory cache
+        val cachedData = agedInMemCache.get(UPCOMING_LAUNCHES_KEY) as? List<LaunchEntity>
+        return if (!cachedData.isNullOrEmpty()) cachedData
+        else {
             Log.d(TAG, "cache is stale, getting fresh data")
 
             // make the API call
@@ -95,33 +80,27 @@ class LiveDataRepository {
                         .sortedBy { it.dateUnix }
 
                     agedInMemCache.set(UPCOMING_LAUNCHES_KEY, launchEntities) // update cache
-                    emit(success(launchEntities)) // success state
+                    return launchEntities
                 }
             } else {
-                emit(error<List<LaunchEntity>>(Exception("getUpdateLaunches() was not successful: ${response.code()}"))) // error state
+                throw(Exception("getUpdateLaunches() was not successful: ${response.code()}"))
             }
-
-        }.onFailure {
-            emit(error<List<LaunchEntity>>(it as Exception)) // error state
+            emptyList()
         }
     }
 
     /**
-     * fetches all past SpaceX launches as LiveData using Coroutines
+     * fetches all past SpaceX launches
      *
      * If cached data is not present, will contact the [SpaceXApi] to refresh the [AgedMemoryCache]
      */
     @Suppress("UNCHECKED_CAST")
-    fun getPastLaunches() = liveData(Dispatchers.IO) {
-        emit(loading()) // loading state
-        runCatching {
+    suspend fun getPastLaunches(): List<LaunchEntity> {
 
-            // check in memory cache
-            val cachedData = agedInMemCache.get(PAST_LAUNCHES_KEY) as? List<LaunchEntity>
-            cachedData?.let {
-                emit(success(cachedData))
-                return@liveData
-            }
+        // check in memory cache
+        val cachedData = agedInMemCache.get(PAST_LAUNCHES_KEY) as? List<LaunchEntity>
+        return if (!cachedData.isNullOrEmpty()) cachedData
+        else {
             Log.d(TAG, "cache is stale, getting fresh data")
 
             // make the API call
@@ -135,13 +114,12 @@ class LiveDataRepository {
                         .sortedByDescending { it.dateUnix }
 
                     agedInMemCache.set(PAST_LAUNCHES_KEY, launchEntities) // update cache
-                    emit(success(launchEntities)) // success state
+                    return launchEntities
                 }
             } else {
-                emit(error<List<LaunchEntity>>(Exception("getPastLaunches() was not successful: ${response.code()}"))) // error state
+                throw(Exception("getUpdateLaunches() was not successful: ${response.code()}"))
             }
-        }.onFailure {
-            emit(error<List<LaunchEntity>>(it as Exception)) // error state
+            emptyList()
         }
     }
 

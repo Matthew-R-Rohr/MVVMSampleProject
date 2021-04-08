@@ -151,6 +151,7 @@ class DebugFragment : Fragment() {
                     updateLog("Error: ${it.error?.message}")
                 }
                 UIState.Status.LOADING -> updateLog("LATEST LIVEDATA - LOADING")
+                UIState.Status.EMPTY -> updateLog("LATEST LIVEDATA - EMPTY")
             }
         })
 
@@ -163,6 +164,7 @@ class DebugFragment : Fragment() {
                     updateLog("Error: ${it.error?.message}")
                 }
                 UIState.Status.LOADING -> updateLog("UPCOMING LIVEDATA - LOADING")
+                UIState.Status.EMPTY -> updateLog("LATEST LIVEDATA - EMPTY")
             }
         })
 
@@ -175,6 +177,7 @@ class DebugFragment : Fragment() {
                     updateLog("Error: ${it.error?.message}")
                 }
                 UIState.Status.LOADING -> updateLog("PAST LIVEDATA - LOADING")
+                UIState.Status.EMPTY -> updateLog("LATEST LIVEDATA - EMPTY")
             }
         })
     }
@@ -194,6 +197,7 @@ class DebugFragment : Fragment() {
                         updateLog("Error: ${it.error?.message}")
                     }
                     UIState.Status.LOADING -> updateLog("LATEST FLOW - LOADING")
+                    UIState.Status.EMPTY -> updateLog("LATEST FLOW - EMPTY")
                 }
             }
         }
@@ -208,6 +212,7 @@ class DebugFragment : Fragment() {
                         updateLog("Error: ${it.error?.message}")
                     }
                     UIState.Status.LOADING -> updateLog("UPCOMING FLOW - LOADING")
+                    UIState.Status.EMPTY -> updateLog("UPCOMING FLOW - EMPTY")
                 }
             }
         }
@@ -222,6 +227,7 @@ class DebugFragment : Fragment() {
                         updateLog("Error: ${it.error?.message}")
                     }
                     UIState.Status.LOADING -> updateLog("PAST FLOW - LOADING")
+                    UIState.Status.EMPTY -> updateLog("PAST FLOW - EMPTY")
                 }
             }
         }
@@ -243,6 +249,7 @@ class DebugFragment : Fragment() {
                         updateLog("Error: ${result.error?.message}")
                     }
                     UIState.Status.LOADING -> updateLog("LATEST RXJAVA - LOADING")
+                    UIState.Status.EMPTY -> updateLog("LATEST RXJAVA - EMPTY")
                 }
             }.addToComposite(compositeDisposable)
 
@@ -256,7 +263,8 @@ class DebugFragment : Fragment() {
                         Log.e(TAG, result.error?.message, result.error)
                         updateLog("Error: ${result.error?.message}")
                     }
-                    UIState.Status.LOADING -> updateLog("LATEST RXJAVA - LOADING")
+                    UIState.Status.LOADING -> updateLog("UPCOMING RXJAVA - LOADING")
+                    UIState.Status.EMPTY -> updateLog("UPCOMING RXJAVA - EMPTY")
                 }
             }.addToComposite(compositeDisposable)
 
@@ -270,7 +278,8 @@ class DebugFragment : Fragment() {
                         Log.e(TAG, result.error?.message, result.error)
                         updateLog("Error: ${result.error?.message}")
                     }
-                    UIState.Status.LOADING -> updateLog("LATEST RXJAVA - LOADING")
+                    UIState.Status.LOADING -> updateLog("PAST RXJAVA - LOADING")
+                    UIState.Status.EMPTY -> updateLog("PAST RXJAVA - EMPTY")
                 }
             }.addToComposite(compositeDisposable)
     }
@@ -289,6 +298,7 @@ class DebugFragment : Fragment() {
                     updateLog("Error: ${it.error?.message}")
                 }
                 UIState.Status.LOADING -> updateLog("LATEST Callback - LOADING")
+                UIState.Status.EMPTY -> updateLog("LATEST Callback - EMPTY")
             }
         })
 
@@ -301,6 +311,7 @@ class DebugFragment : Fragment() {
                     updateLog("Error: ${it.error?.message}")
                 }
                 UIState.Status.LOADING -> updateLog("PAST Callback - LOADING")
+                UIState.Status.EMPTY -> updateLog("PAST Callback - EMPTY")
             }
         })
 
@@ -313,6 +324,7 @@ class DebugFragment : Fragment() {
                     updateLog("Error: ${it.error?.message}")
                 }
                 UIState.Status.LOADING -> updateLog("UPCOMING Callback - LOADING")
+                UIState.Status.EMPTY -> updateLog("UPCOMING Callback - EMPTY")
             }
         })
     }

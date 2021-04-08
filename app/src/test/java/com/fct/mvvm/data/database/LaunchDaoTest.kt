@@ -8,9 +8,6 @@ import com.fct.mvvm.TestApplication
 import com.fct.mvvm.createLaunchEntity
 import com.fct.mvvm.validateEntity
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -59,7 +56,7 @@ class LaunchDaoTest {
     }
 
     @Test
-    fun `test getting Latest launch with Coroutines`() = runBlockingTest {
+    fun `test getting Latest Launch`() {
 
         // arrange
         launchDao.insertAll(
@@ -71,16 +68,11 @@ class LaunchDaoTest {
         )
 
         // assert
-        launchDao.getLatestLaunch()
-            .take(1)
-            .collect {
-                // assert
-                validateEntity(entityLatest, it)
-            }
+        validateEntity(entityLatest, launchDao.getLatestLaunch())
     }
 
     @Test
-    fun `test getting Upcoming launch with Coroutines`() = runBlockingTest {
+    fun `test getting Upcoming Launches`() {
 
         // arrange
         launchDao.insertAll(
@@ -92,16 +84,11 @@ class LaunchDaoTest {
         )
 
         // assert
-        launchDao.getUpcomingLaunches()
-            .take(1)
-            .collect {
-                // assert
-                validateEntity(entityUpcoming, it[0])
-            }
+        validateEntity(entityUpcoming, launchDao.getUpcomingLaunches().take(1)[0])
     }
 
     @Test
-    fun `test getting Past launches with Coroutines`() = runBlockingTest {
+    fun `test getting Past Launches`() {
 
         // arrange
         launchDao.insertAll(
@@ -113,14 +100,10 @@ class LaunchDaoTest {
         )
 
         // assert
-        launchDao.getPastLaunches()
-            .take(1)
-            .collect {
-                // assert
-                assertEquals(2, it.size)
-                validateEntity(entityLatest, it[0])
-                validateEntity(entityPast, it[1])
-            }
+        val results = launchDao.getPastLaunches()
+        assertEquals(2, results.size)
+        validateEntity(entityLatest, results[0])
+        validateEntity(entityPast, results[1])
     }
 
 

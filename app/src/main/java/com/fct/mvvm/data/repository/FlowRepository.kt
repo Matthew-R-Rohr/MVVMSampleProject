@@ -3,12 +3,7 @@ package com.fct.mvvm.data.repository
 import android.util.Log
 import com.fct.mvvm.api.SpaceXApi
 import com.fct.mvvm.data.LaunchEntity
-import com.fct.mvvm.data.UIState.Companion.error
-import com.fct.mvvm.data.UIState.Companion.loading
-import com.fct.mvvm.data.UIState.Companion.success
 import com.fct.mvvm.data.database.LaunchDao
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 
 private const val TAG = "tcbcFlowRepo"
 
@@ -25,98 +20,87 @@ class FlowRepository(
     private val dtoTransformer = LaunchDtoTransformer()
 
     /**
-     * observes the latest SpaceX launch as a Flow with Coroutines
+     * Returns latest SpaceX launch
      *
      * If cached data is not present, will contact the [SpaceXApi] to refresh the data within the SpaceXDatabase
      */
-    fun getLatestLaunch() = launchDao.getLatestLaunch()
-        .distinctUntilChanged()
-        // alternatively we could use .map, but using [flatMapLatest] allows for better control over the [UIState]
-        .flatMapLatest { cachedEntity ->
-            flow {
-                if (cachedEntity != null) emit(success(cachedEntity)) // success state
-                else {
+    suspend fun getLatestLaunch(): LaunchEntity? {
+        val cached = launchDao.getLatestLaunch()
+        return if (cached != null) cached
+        else {
+            Log.d(TAG, "empty cache, getting data")
+            val response = spaceXApi.spaceXService.getLatestLaunchByCoroutine()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    val entity = dtoTransformer.transformToLaunchEntity(it)
 
-                    emit(loading<LaunchEntity>()) // loading state
-                    Log.d(TAG, "empty cache, getting data")
+                    // update cache
+                    launchDao.insert(entity)
 
-                    val response = spaceXApi.spaceXService.getLatestLaunchByCoroutine()
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            // update cache : this will also cause the observable from the DB to fire,
-                            // which will pass back the [cachedEntity] above
-                            launchDao.insert(dtoTransformer.transformToLaunchEntity(it))
-                        }
-                    } else {
-                        emit(error<LaunchEntity>(Exception("getLatestLaunch() was not successful: ${response.code()}"))) // error state
-                    }
+                    // return result
+                    return entity
                 }
-            }.flowOn(Dispatchers.IO).catch { exception ->
-                emit(error(exception as Exception)) // error state
+            } else {
+                throw Exception("getLatestLaunch() was not successful: ${response.code()}") // error state)
             }
         }
+    }
 
     /**
-     * observes all upcoming SpaceX launches as a Flow with Coroutines
+     * Returns all upcoming SpaceX launches
      *
      * If cached data is not present, will contact the [SpaceXApi] to refresh the data within the SpaceXDatabase
      */
-    fun getUpcomingLaunches() = launchDao.getUpcomingLaunches()
-        .distinctUntilChanged()
-        .flatMapLatest { cachedEntity ->
-            flow {
-                if (cachedEntity.isNotEmpty()) emit(success(cachedEntity)) // success state
-                else {
+    suspend fun getUpcomingLaunches(): List<LaunchEntity> {
+        val cachedList = launchDao.getUpcomingLaunches()
+        return if (cachedList.size > 1) cachedList
+        else {
+            Log.d(TAG, "empty cache, getting data")
+            val response = spaceXApi.spaceXService.getUpcomingLaunchesByCoroutine()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    val entityList = dtoTransformer.transformToLaunchEntityCollection(it)
 
-                    emit(loading<List<LaunchEntity>>()) // loading state
-                    Log.d(TAG, "empty cache, getting data")
+                    // update cache
+                    launchDao.insertAll(entityList)
 
-                    val response = spaceXApi.spaceXService.getUpcomingLaunchesByCoroutine()
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            // update cache : this will also cause the observable from the DB to fire,
-                            // which will pass back the [cachedEntity] above
-                            launchDao.insertAll(dtoTransformer.transformToLaunchEntityCollection(it))
-                        }
-                    } else {
-                        emit(error<List<LaunchEntity>>(Exception("getUpcomingLaunches() was not successful: ${response.code()}"))) // error state
-                    }
+                    // return results
+                    return entityList
                 }
-            }.flowOn(Dispatchers.IO).catch { exception ->
-                emit(error(exception as Exception)) // error state
+            } else {
+                throw Exception("getUpcomingLaunches() was not successful: ${response.code()}") // error state)
             }
+            emptyList()
         }
+    }
 
     /**
-     * observes all past SpaceX launches as a Flow with Coroutines
+     * Returns all past SpaceX launches
      *
      * If cached data is not present, will contact the [SpaceXApi] to refresh the data within the SpaceXDatabase
      */
-    fun getPastLaunches() = launchDao.getPastLaunches()
-        .distinctUntilChanged()
-        .flatMapLatest { cachedEntity ->
-            flow {
-                if (cachedEntity.size > 1) emit(success(cachedEntity)) // success state
-                else {
+    suspend fun getPastLaunches(): List<LaunchEntity> {
+        val cachedList = launchDao.getPastLaunches()
+        return if (cachedList.size > 1) cachedList
+        else {
+            Log.d(TAG, "empty cache, getting data")
+            val response = spaceXApi.spaceXService.getPastLaunchesByCoroutine()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    val entityList = dtoTransformer.transformToLaunchEntityCollection(it)
 
-                    emit(loading<List<LaunchEntity>>()) // loading state
-                    Log.d(TAG, "empty cache, getting data")
+                    // update cache
+                    launchDao.insertAll(entityList)
 
-                    val response = spaceXApi.spaceXService.getPastLaunchesByCoroutine()
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            // update cache : this will also cause the observable from the DB to fire,
-                            // which will pass back the [cachedEntity] above
-                            launchDao.insertAll(dtoTransformer.transformToLaunchEntityCollection(it))
-                        }
-                    } else {
-                        emit(error<List<LaunchEntity>>(Exception("getPastLaunches() was not successful: ${response.code()}"))) // error state
-                    }
+                    // return results
+                    return entityList
                 }
-            }.flowOn(Dispatchers.IO).catch { exception ->
-                emit(error(exception as Exception)) // error state
+            } else {
+                throw Exception("getPastLaunches() was not successful: ${response.code()}") // error state)
             }
+            emptyList()
         }
+    }
 
     suspend fun deleteCaches() {
         launchDao.deleteAll()

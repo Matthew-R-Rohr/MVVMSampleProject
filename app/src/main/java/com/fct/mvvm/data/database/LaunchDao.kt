@@ -7,13 +7,12 @@ import androidx.room.Query
 import com.fct.mvvm.data.LaunchEntity
 import io.reactivex.Completable
 import io.reactivex.Maybe
-import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 abstract class LaunchDao {
 
-    //region SQL methods using Coroutines/Flow
+    //region SQL methods (non threaded!)
 
     /**
      * Return the latest [LaunchEntity]
@@ -26,7 +25,7 @@ abstract class LaunchDao {
         LIMIT 1
     """
     )
-   abstract fun getLatestLaunch(): Flow<LaunchEntity?>
+   abstract fun getLatestLaunch(): LaunchEntity?
 
     /**
      * Return a list of all upcoming [LaunchEntity]
@@ -38,7 +37,7 @@ abstract class LaunchDao {
         ORDER BY dateUnix asc
     """
     )
-    abstract fun getUpcomingLaunches(): Flow<List<LaunchEntity>>
+    abstract fun getUpcomingLaunches(): List<LaunchEntity>
 
     /**
      * Return a list of the past [LaunchEntity]
@@ -50,13 +49,13 @@ abstract class LaunchDao {
         ORDER BY dateUnix desc
     """
     )
-    abstract fun getPastLaunches(): Flow<List<LaunchEntity>>
+    abstract fun getPastLaunches(): List<LaunchEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(launchEntity: LaunchEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertAll(launchCollection: List<LaunchEntity>)
+    abstract fun insertAll(launchCollection: List<LaunchEntity>)
 
     @Query("DELETE FROM launch_entity")
     abstract suspend fun deleteAll()

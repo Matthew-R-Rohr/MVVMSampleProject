@@ -6,18 +6,23 @@ package com.fct.mvvm.data
 data class UIState<out T>(
     val status: Status,
     val data: T?,
-    val error: Exception?
+    val error: Exception?,
 ) {
 
     enum class Status {
         SUCCESS,
         ERROR,
-        LOADING
+        LOADING,
+        EMPTY
     }
 
     companion object {
         fun <T> success(data: T): UIState<T> {
             return UIState(Status.SUCCESS, data, null)
+        }
+
+        fun <T> empty(): UIState<T> {
+            return UIState(Status.EMPTY, null, null)
         }
 
         fun <T> error(error: Exception, data: T? = null): UIState<T> {

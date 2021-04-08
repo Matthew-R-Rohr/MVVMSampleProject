@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/spacing_medium">
 
     <TextView
-        android:id="@+id/txt_error"
+        android:id="@+id/txt_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:focusable="true"

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -78,8 +79,9 @@ abstract class BaseLaunchFragment : Fragment(), AdapterView.OnItemSelectedListen
     protected fun updateUIWithList(result: UIState<List<LaunchEntity>>) {
         when (result.status) {
             UIState.Status.SUCCESS -> submitList(result.data)
-            UIState.Status.ERROR -> showErrorUI(result.error)
+            UIState.Status.ERROR -> showMessageUI(getString(R.string.generic_load_error, result.error?.message))
             UIState.Status.LOADING -> showLoadingUI()
+            UIState.Status.EMPTY -> showMessageUI(getString(R.string.generic_empty_message))
         }
     }
 
@@ -89,18 +91,19 @@ abstract class BaseLaunchFragment : Fragment(), AdapterView.OnItemSelectedListen
     protected fun updateUI(result: UIState<LaunchEntity>) {
         when (result.status) {
             UIState.Status.SUCCESS -> submitList(result.data?.asList())
-            UIState.Status.ERROR -> showErrorUI(result.error)
+            UIState.Status.ERROR -> showMessageUI(getString(R.string.generic_load_error, result.error?.message))
             UIState.Status.LOADING -> showLoadingUI()
+            UIState.Status.EMPTY -> showMessageUI(getString(R.string.generic_empty_message))
         }
     }
 
     /**
-     * Hides the current list and shows a Error TextView
+     * Hides the current list and shows a message TextView
      */
-    private fun showErrorUI(error: Exception?) {
+    private fun showMessageUI(message: String) {
         with(binding) {
-            txtError.text = getString(R.string.generic_load_error, error?.message)
-            txtError.visibility = View.VISIBLE
+            txtMessage.text = message
+            txtMessage.visibility = View.VISIBLE
             pbLoadingIndicator.visibility = View.GONE
             rvLaunchList.visibility = View.GONE
         }
@@ -111,7 +114,7 @@ abstract class BaseLaunchFragment : Fragment(), AdapterView.OnItemSelectedListen
      */
     protected fun showLoadingUI() {
         with(binding) {
-            txtError.visibility = View.GONE
+            txtMessage.visibility = View.GONE
             pbLoadingIndicator.visibility = View.VISIBLE
             rvLaunchList.visibility = View.GONE
         }
@@ -127,7 +130,7 @@ abstract class BaseLaunchFragment : Fragment(), AdapterView.OnItemSelectedListen
 
         with(binding) {
             (rvLaunchList.adapter as LaunchListAdapter).submitList(data)
-            txtError.visibility = View.GONE
+            txtMessage.visibility = View.GONE
             pbLoadingIndicator.visibility = View.GONE
             rvLaunchList.visibility = View.VISIBLE
         }

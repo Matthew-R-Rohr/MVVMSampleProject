@@ -39,5 +39,6 @@
     <string name="details_flight_number">Flight %1$d</string>
     <string name="details_available_photos">Viewing photo %1$d of %2$d, tap to view the next</string>
     <string name="generic_load_error">There was an error loading this content.\n\n%1$s</string>
+    <string name="generic_empty_message">There was no data found for this query</string>
 
 </resources>
